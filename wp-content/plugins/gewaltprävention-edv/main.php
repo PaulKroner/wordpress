@@ -37,21 +37,21 @@ function plugin_enqueue_tailwind()
 }
 add_action('wp_enqueue_scripts', 'plugin_enqueue_tailwind');
 
-function test()
+// Include dashboard.php
+function include_dashboard()
 {
-  echo '<h1 class="bg-green-500">Test2222</h1>';
+    $dashboard_path = plugin_dir_path(__FILE__) . 'templates/pages/dashboard.php';
+
+    if (file_exists($dashboard_path)) {
+        include $dashboard_path;
+    } else {
+        echo '<p>Dashboard file not found.</p>';
+    }
+}
+add_action('wp_footer', 'include_dashboard');
+
+function your_plugin_enqueue_styles() {
+  wp_enqueue_style( 'your-plugin-styles', plugin_dir_url( __FILE__ ) . 'assets/css/styles.css' );
 }
 
-add_action('wp_footer', 'test');
-
-
-// test function
-function render_tailwind_content()
-{
-  echo '<div class="bg-blue-500 text-white p-4 rounded shadow-lg">
-          <h1 class="text-2xl font-bold">Hello, Tailwind!</h1>
-          <p>This is styled with Tailwind CSS.</p>
-        </div>
-        ';
-}
-add_action('wp_footer', 'render_tailwind_content');
+add_action( 'wp_enqueue_scripts', 'your_plugin_enqueue_styles' );

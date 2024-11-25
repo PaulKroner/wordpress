@@ -270,7 +270,7 @@ function get_the_block_template_html() {
 
 	// Wrap block template in .wp-site-blocks to allow for specific descendant styles
 	// (e.g. `.wp-site-blocks > *`).
-	return '<div class="wp-site-blocks">' . $content . '</div>';
+	// return '<div class="wp-site-blocks">' . $content . '</div>'; // deaktiviert, damit wordpress nicht ständig irgendwas vorschlägt
 }
 
 /**

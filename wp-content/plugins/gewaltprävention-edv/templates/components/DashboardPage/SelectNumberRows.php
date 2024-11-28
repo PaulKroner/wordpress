@@ -1,5 +1,5 @@
 <?php
-function SelectNumberRows()
+function selectNumberRows()
 {
   $select_path = plugin_dir_path(__FILE__) . '../ui/select.php';
   include $select_path;

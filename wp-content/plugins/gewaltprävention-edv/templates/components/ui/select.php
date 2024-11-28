@@ -57,18 +57,4 @@ function select($id, $placeholder, $options = [])
   </script>
 <?php
 }
-
-// // Example usage:
-// select_rows('dropdown1', [
-//   5 => '5 items',
-//   10 => '10 items',
-//   20 => '20 items',
-//   50 => '50 items',
-// ]);
-
-// select_rows('dropdown2', [
-//   1 => 'Option 1',
-//   2 => 'Option 2',
-//   3 => 'Option 3',
-// ]);
 ?>

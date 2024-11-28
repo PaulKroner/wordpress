@@ -5,3 +5,7 @@
 html {
   background-color: #92c355;
 }
+
+body {
+  background-color: #92c355 !important;
+}

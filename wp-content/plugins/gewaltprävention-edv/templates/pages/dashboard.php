@@ -31,14 +31,10 @@
         'nachweis4' => true,
       ];
 
-      // column_selection($showNachweise, 'handleToggle');
       $column_selection_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/ColumnSelection.php';
       include $column_selection_path;
+      // call the function to render it
       column_selection($showNachweise, 'handleToggle');
-
-
-      // Replace with your function or code for the ColumnSelection component
-      // Example: include your ColumnSelection component here
       ?>
 
       <!-- table functionality container -->
@@ -48,7 +44,15 @@
           <div class="flex flex-row gap-4">
             <!-- Replace with your SelectNumberRows component -->
             <?php
-            // Example: echo out the rows per page select options
+            $select_path = plugin_dir_path(__FILE__) . '../components/ui/select.php';
+            include $select_path;
+            select('dropdown1', 'Zeilen', [
+              5 => '5',
+              10 => '10',
+              20 => '20',
+              50 => '50',
+            ]);
+
             ?>
             <!-- Replace with your SelectRowSort component -->
             <?php

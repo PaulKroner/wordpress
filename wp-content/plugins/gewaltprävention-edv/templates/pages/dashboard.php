@@ -44,19 +44,15 @@
           <div class="flex flex-row gap-4">
             <!-- Replace with your SelectNumberRows component -->
             <?php
-            $select_path = plugin_dir_path(__FILE__) . '../components/ui/select.php';
-            include $select_path;
-            select('dropdown1', 'Zeilen', [
-              5 => '5',
-              10 => '10',
-              20 => '20',
-              50 => '50',
-            ]);
-
+            $selectNumberRows_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/SelectNumberRows.php';
+            include $selectNumberRows_path;
+            selectNumberRows();
             ?>
-            <!-- Replace with your SelectRowSort component -->
+
             <?php
-            // Example: echo out the row sort select options
+            $selectRowSort_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/SelectRowSort.php';
+            include $selectRowSort_path;
+            selectRowSort();
             ?>
           </div>
         </div>

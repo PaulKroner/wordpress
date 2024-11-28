@@ -59,9 +59,10 @@
 
         <!-- Searchbar -->
         <div class="flex gap-6 sm:gap-4 flex-col sm:flex-row sm:ml-auto">
-          <!-- Replace with your TableSearchBar component -->
           <?php
-          // Example: input field for search query
+          $tableSearchbar_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/tableSearchbar.php';
+          include $tableSearchbar_path;
+          tableSearchBar();
           ?>
           <!-- Add new employee -->
           <?php if ($userRole === 1 || $userRole === 2) : ?>

@@ -62,8 +62,7 @@ function column_selection($showNachweise, $handleToggle)
 
   <script type="text/javascript">
     function handleToggle(checkboxName) {
-      // Here, you would handle the toggle logic in JavaScript
-      // Example: You can send an AJAX request to update the state of the checkbox
+      showNachweise[checkboxName] = !showNachweise[checkboxName];
       console.log(checkboxName + " toggled");
     }
   </script>

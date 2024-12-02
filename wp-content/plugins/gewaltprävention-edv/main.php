@@ -48,7 +48,7 @@ function include_dashboard()
         echo '<p>Dashboard file not found.</p>';
     }
 }
-add_action('wp_footer', 'include_dashboard');
+add_action('wp_footer', 'include_dashboard'); // Include dashboard.php in the footer is not recommended - must be main or something
 
 function your_plugin_enqueue_styles() {
   wp_enqueue_style( 'your-plugin-styles', plugin_dir_url( __FILE__ ) . 'assets/css/styles.css' );

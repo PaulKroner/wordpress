@@ -37,38 +37,39 @@
       column_selection($showNachweise, 'handleToggle');
       ?>
 
-      <!-- table functionality container -->
       <div class="flex gap-6 w-full flex-col sm:gap-4 sm:flex-row items-center">
         <!-- Number of Rows -->
         <div class="sm:flex-shrink-0">
           <div class="flex flex-row gap-4">
-            <!-- Replace with your SelectNumberRows component -->
+            <!-- SelectNumberRows -->
             <?php
-            $selectNumberRows_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/SelectNumberRows.php';
+            $selectNumberRows_path = plugin_dir_path(__FILE__) . '../components/dashboardPage/SelectNumberRows.php';
             include $selectNumberRows_path;
             selectNumberRows();
             ?>
 
+            <!-- SelectRowSort -->
             <?php
-            $selectRowSort_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/SelectRowSort.php';
+            $selectRowSort_path = plugin_dir_path(__FILE__) . '../components/dashboardPage/SelectRowSort.php';
             include $selectRowSort_path;
             selectRowSort();
             ?>
           </div>
         </div>
 
-        <!-- Searchbar -->
-        <div class="flex gap-6 sm:gap-4 flex-col sm:flex-row sm:ml-auto">
+        <div class="flex gap-6 sm:gap-4 flex-col sm:flex-row sm:ml-auto items">
+          <!-- Searchbar -->
           <?php
-          $tableSearchbar_path = plugin_dir_path(__FILE__) . '../components/DashboardPage/tableSearchbar.php';
+          $tableSearchbar_path = plugin_dir_path(__FILE__) . '../components/dashboardPage/tableSearchbar.php';
           include $tableSearchbar_path;
           tableSearchBar();
           ?>
           <!-- Add new employee -->
           <?php if ($userRole === 1 || $userRole === 2) : ?>
-            <!-- Add employee dialog component -->
             <?php
-            // Example: include AddEmployeeDialog component
+            $addEmployeeDialog_path = plugin_dir_path(__FILE__) . '../components/dashboardPage/AddEmployeeDialog.php';
+            include $addEmployeeDialog_path;
+            addEmployeeDialog();
             ?>
           <?php endif; ?>
         </div>
@@ -77,8 +78,9 @@
       <!-- table -->
       <div class="max-w-full">
         <?php
-        // Replace with your DashboardTable component
-        // Example: use a loop or function to display the table data
+        $dashboardTable_path = plugin_dir_path(__FILE__) . '../components/dashboardTable/dashboardTable.php';
+        include $dashboardTable_path;
+        dashboardTable($showNachweise);
         ?>
       </div>
 

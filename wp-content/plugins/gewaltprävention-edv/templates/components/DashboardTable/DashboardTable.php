@@ -84,6 +84,32 @@ function dashboardTable($showNachweise)
       </tbody>
     </table>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('search'); // Get the search input element
+      const table = document.getElementById('dashboard-table'); // Get the table
+
+      // Function to filter the table rows based on the search input
+      searchInput.addEventListener('input', function() {
+        const searchValue = searchInput.value.toLowerCase(); // Get the search value
+        const rows = table.querySelectorAll('tbody tr'); // Get all table rows in the tbody
+
+        rows.forEach(row => {
+          const name = row.cells[0].textContent.toLowerCase(); // Name column (1st column)
+          const vorname = row.cells[1].textContent.toLowerCase(); // Vorname column (2nd column)
+          const email = row.cells[2].textContent.toLowerCase(); // Email column (3rd column)
+          const postadresse = row.cells[3].textContent.toLowerCase(); // Postadresse column (4th column)
+
+          // Check if the search value matches any of the columns' text content
+          if (name.includes(searchValue) || vorname.includes(searchValue) || email.includes(searchValue) || postadresse.includes(searchValue)) {
+            row.style.display = ''; // Show the row if it matches
+          } else {
+            row.style.display = 'none'; // Hide the row if it doesn't match
+          }
+        });
+      });
+    });
+  </script>
 
 <?php
 }

@@ -14,7 +14,8 @@ Author URI: https://ecsa.de/
 */
 
 // favicon
-function plugin_add_favicon() {
+function plugin_add_favicon()
+{
   // URL zum Favicon relativ zum Plugin-Verzeichnis
   $favicon_url = plugins_url('assets/favicon.ico', __FILE__);
 
@@ -40,18 +41,73 @@ add_action('wp_enqueue_scripts', 'plugin_enqueue_tailwind');
 // Include dashboard.php
 function include_dashboard()
 {
-    $dashboard_path = plugin_dir_path(__FILE__) . 'templates/pages/dashboard.php';
+  $dashboard_path = plugin_dir_path(__FILE__) . 'templates/pages/dashboard.php';
 
-    if (file_exists($dashboard_path)) {
-        include $dashboard_path;
-    } else {
-        echo '<p>Dashboard file not found.</p>';
-    }
+  if (file_exists($dashboard_path)) {
+    include $dashboard_path;
+  } else {
+    echo '<p>Dashboard file not found.</p>';
+  }
 }
 add_action('wp_footer', 'include_dashboard'); // Include dashboard.php in the footer is not recommended - must be main or something
 
-function your_plugin_enqueue_styles() {
-  wp_enqueue_style( 'your-plugin-styles', plugin_dir_url( __FILE__ ) . 'assets/css/styles.css' );
+function your_plugin_enqueue_styles()
+{
+  wp_enqueue_style('your-plugin-styles', plugin_dir_url(__FILE__) . 'assets/css/styles.css');
 }
 
-add_action( 'wp_enqueue_scripts', 'your_plugin_enqueue_styles' );
+add_action('wp_enqueue_scripts', 'your_plugin_enqueue_styles');
+
+// jQuery
+function enqueue_jquery()
+{
+  wp_enqueue_script('jquery');
+}
+add_action('wp_enqueue_scripts', 'enqueue_jquery');
+
+function enqueue_ajax_script()
+{
+  // Enqueue an empty JavaScript file or one with your custom code
+  wp_enqueue_script('ajax-script', get_template_directory_uri() . '/js/ajax-script.js', [], null, true);
+
+  // Localize the script to pass the `ajaxurl` variable
+  wp_localize_script('ajax-script', 'ajax', [
+    'url' => admin_url('admin-ajax.php')
+  ]);
+}
+add_action('wp_enqueue_scripts', 'enqueue_ajax_script');
+
+
+// Define constants
+define('EDV_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('EDV_PLUGIN_URL', plugin_dir_url(__FILE__));
+
+// Include required backend files
+// require_once EDV_PLUGIN_DIR . 'includes/class-edv-ajax.php';
+require_once EDV_PLUGIN_DIR . 'includes/api/class-dashboardPage.php';
+
+// Enqueue scripts
+add_action('wp_enqueue_scripts', function () {
+//   wp_enqueue_script(
+//     'edv-script',
+//     EDV_PLUGIN_URL . 'assets/edv-script.js',
+//     ['jquery'],
+//     '1.0',
+//     true
+//   );
+
+//   // Pass AJAX URL to JavaScript
+//   wp_localize_script('edv-script', 'edv_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+
+  // enqueue addEmployee Script
+  wp_enqueue_script(
+    'addEmployee-script',
+    EDV_PLUGIN_URL . 'assets/js/addEmployee-script.js',
+    ['jquery'],
+    '1.0',
+    true
+  );
+
+  // Pass AJAX URL to JavaScript
+  wp_localize_script('addEmployee-script', 'dashboardPage_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+});

@@ -34,7 +34,8 @@ function dialog()
       const dialogOverlay = document.getElementById('dialog-overlay');
       const dialogContent = document.getElementById('dialog-content');
       const closeDialogButton = document.getElementById('close-dialog');
-      const cancelDialogButton = document.getElementById('cancel-dialog');
+      // const cancelDialogButton = document.getElementById('cancel-dialog');
+      const submitButton = document.getElementById('submit-button');
 
       // Show the dialog
       window.showDialog = function() {
@@ -48,12 +49,37 @@ function dialog()
 
       // Event listeners
       closeDialogButton.addEventListener('click', hideDialog);
-      cancelDialogButton.addEventListener('click', hideDialog);
+      // cancelDialogButton.addEventListener('click', hideDialog);
 
       dialogOverlay.addEventListener('click', function(event) {
         if (!dialogContent.contains(event.target)) {
           hideDialog();
         }
+      });
+
+      // Handle form submission
+      submitButton.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(document.querySelector('form'));
+
+        console.log('Form data:', formData);
+
+        // Send the form data via AJAX
+        fetch('insert_employee.php', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert('Mitarbeiter hinzugefügt');
+              hideDialog(); // Close the dialog after successful submission
+            } else {
+              alert('Fehler beim Hinzufügen des Mitarbeiters');
+            }
+          })
+          // .catch(error => console.log('Error:' + error));
       });
     });
   </script>

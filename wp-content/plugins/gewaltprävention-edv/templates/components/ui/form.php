@@ -130,7 +130,7 @@ function form($title, $subtitle)
           sind Pflichtfelder!
         </div>
 
-        <section class="grid gap-3 py-4 text-sm">
+        <form class="grid gap-3 py-4 text-sm">
           <?php foreach ($fields as $field): ?>
             <?php if ($field['id'] === 'postaladress'): ?>
               <!-- Include postalAdress.php if the field id is postaladress -->
@@ -164,9 +164,8 @@ function form($title, $subtitle)
                       <div>Klicken sie auf </div>
                       <span className="ml-1"></span>
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
-  <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
-</svg>
-
+                        <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
+                      </svg>
 
                       <div>, um</div>
                     </span>
@@ -176,7 +175,10 @@ function form($title, $subtitle)
               </div>
             <?php endif; ?>
           <?php endforeach; ?>
-        </section>
+
+          <button type="submit" id="submit-button" class="bg-blue-500 hover:bg-blue-700 text-white inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">Mitarbeiter hinzufügen</button>
+
+        </form>
 
       </div>
     </div>

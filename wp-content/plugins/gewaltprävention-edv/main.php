@@ -9,7 +9,7 @@ Plugin Name: Gewaltprävention-EDV
 http://localhost/wordpress/wp-admin/plugins.php?plugin=hello.php
 Description: Test Plugin für die EDV-Lösung des Gewaltpräventionsprojekts
 Author: EC Sachsen-Anhalt e.V.
-Version: 1.0
+Version: 1.1
 Author URI: https://ecsa.de/
 */
 

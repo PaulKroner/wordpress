@@ -9,6 +9,7 @@ class DashbaordPage_Ajax
     // add_action('wp_ajax_nopriv_insert_user', [$this, 'insert_user']);
 
     add_action('wp_ajax_insert_employee', [$this, 'insert_employee']);
+    add_action('wp_ajax_delete_employee', [$this, 'delete_employee']);
   }
 
   // public function insert_user()
@@ -125,6 +126,27 @@ class DashbaordPage_Ajax
       wp_send_json_error(['message' => 'Failed to insert employee.']);
     }
     exit;
+  }
+
+  function delete_employee()
+  {
+    // Check for the employee ID
+    if (!isset($_POST['employee_id']) || empty($_POST['employee_id'])) {
+      wp_send_json_error('Invalid employee ID.');
+    }
+
+    global $wpdb;
+    $employee_id = intval($_POST['employee_id']);
+    $table_name = 'employees';
+
+    // Delete the employee
+    $deleted = $wpdb->delete($table_name, ['id' => $employee_id]);
+
+    if ($deleted) {
+      wp_send_json_success();
+    } else {
+      wp_send_json_error('Failed to delete the employee.');
+    }
   }
 }
 

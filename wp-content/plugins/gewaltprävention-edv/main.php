@@ -88,16 +88,16 @@ require_once EDV_PLUGIN_DIR . 'includes/api/class-dashboardPage.php';
 
 // Enqueue scripts
 add_action('wp_enqueue_scripts', function () {
-//   wp_enqueue_script(
-//     'edv-script',
-//     EDV_PLUGIN_URL . 'assets/edv-script.js',
-//     ['jquery'],
-//     '1.0',
-//     true
-//   );
+  //   wp_enqueue_script(
+  //     'edv-script',
+  //     EDV_PLUGIN_URL . 'assets/edv-script.js',
+  //     ['jquery'],
+  //     '1.0',
+  //     true
+  //   );
 
-//   // Pass AJAX URL to JavaScript
-//   wp_localize_script('edv-script', 'edv_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+  //   // Pass AJAX URL to JavaScript
+  //   wp_localize_script('edv-script', 'edv_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
 
   // enqueue addEmployee Script
   wp_enqueue_script(
@@ -109,5 +109,16 @@ add_action('wp_enqueue_scripts', function () {
   );
 
   // Pass AJAX URL to JavaScript
-  wp_localize_script('addEmployee-script', 'dashboardPage_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+  wp_localize_script('deleteEmployee-script', 'dashboardPage_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
+
+  wp_enqueue_script(
+    'deleteEmployee-script',
+    EDV_PLUGIN_URL . 'assets/js/deleteEmployee-script.js',
+    ['jquery'],
+    '1.0',
+    true
+  );
+
+  // Pass AJAX URL to JavaScript
+  wp_localize_script('deleteEmployee-script', 'dashboardPage_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
 });

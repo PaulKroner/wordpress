@@ -89,7 +89,7 @@ function addEmployeeDialog()
     ],
     [
       'id' => 'us_abgelaufen',
-      'label' => 'Grundlagenschulung Ablaufdatum',
+      'label' => 'Upgradeschulung Ablaufdatum',
       'type' => 'date',
       'required' => false,
       'disabled' => true,
@@ -265,6 +265,10 @@ function addEmployeeDialog()
       const closeDialogButton = document.getElementById('close-dialog');
       const cancelDialogButton = document.getElementById('cancel-dialog');
       const submitButton = document.getElementById('submit-button');
+      const fzEingetragenField = document.getElementById('fz_eingetragen');
+      const fzAbgelaufenField = document.getElementById('fz_abgelaufen');
+      const usEingetragenField = document.getElementById('us_eingetragen');
+      const usAbgelaufenField = document.getElementById('us_abgelaufen');
 
       // Show the dialog
       window.showDialog = function() {
@@ -285,6 +289,28 @@ function addEmployeeDialog()
           hideDialog();
         }
       });
+
+      // Calculate and display `fz_abgelaufen` when `fz_eingetragen` is changed
+      function calculateExpiry(inputField, outputField) {
+        inputField.addEventListener('change', function() {
+          const enteredDate = new Date(inputField.value);
+          console.log(enteredDate);
+          if (!isNaN(enteredDate)) {
+            // Add 5 years
+            enteredDate.setFullYear(enteredDate.getFullYear() + 5);
+
+            // Format the new date as YYYY-MM-DD
+            outputField.value = enteredDate.toISOString().split('T')[0];
+          } else {
+            outputField.value = ''; // Clear the field if invalid date
+          }
+        });
+      }
+
+      // Apply the function to the fields
+      calculateExpiry(fzEingetragenField, fzAbgelaufenField);
+      calculateExpiry(usEingetragenField, usAbgelaufenField);
+
     });
   </script>
 <?php

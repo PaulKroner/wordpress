@@ -13,8 +13,6 @@ jQuery(document).ready(function ($) {
       hauptamtValue = 0; // "No" button represents 0
     }
 
-    console.log("Selected Value:", hauptamtValue);
-
     if ($(this).hasClass('bg-blue-500')) {
       $(this).removeClass('bg-blue-500').addClass('bg-white');
       hauptamtValue = null;

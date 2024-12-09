@@ -16,8 +16,6 @@ Author URI: https://ecsa.de/
 // favicon
 function plugin_add_favicon()
 {
-function plugin_add_favicon()
-{
   // URL zum Favicon relativ zum Plugin-Verzeichnis
   $favicon_url = plugins_url('assets/favicon.ico', __FILE__);
 
@@ -44,13 +42,7 @@ add_action('wp_enqueue_scripts', 'plugin_enqueue_tailwind');
 function include_dashboard()
 {
   $dashboard_path = plugin_dir_path(__FILE__) . 'templates/pages/dashboard.php';
-  $dashboard_path = plugin_dir_path(__FILE__) . 'templates/pages/dashboard.php';
 
-  if (file_exists($dashboard_path)) {
-    include $dashboard_path;
-  } else {
-    echo '<p>Dashboard file not found.</p>';
-  }
   if (file_exists($dashboard_path)) {
     include $dashboard_path;
   } else {
@@ -59,9 +51,6 @@ function include_dashboard()
 }
 add_action('wp_footer', 'include_dashboard'); // Include dashboard.php in the footer is not recommended - must be main or something
 
-function your_plugin_enqueue_styles()
-{
-  wp_enqueue_style('your-plugin-styles', plugin_dir_url(__FILE__) . 'assets/css/styles.css');
 function your_plugin_enqueue_styles()
 {
   wp_enqueue_style('your-plugin-styles', plugin_dir_url(__FILE__) . 'assets/css/styles.css');

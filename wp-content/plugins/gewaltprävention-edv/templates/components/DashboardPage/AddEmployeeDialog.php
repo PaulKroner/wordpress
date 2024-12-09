@@ -196,6 +196,19 @@ function addEmployeeDialog()
                             <input type="text" id="additional" name="postal_data[additional]" value="<?php echo esc_attr(isset($postal_data['additional']) ? $postal_data['additional'] : ''); ?>" class="col-span-2" placeholder="Zusatz" />
                           <?php endif; ?>
                         </div>
+
+                      <?php elseif ($field['id'] === 'hauptamt'): ?>
+                        <div class="grid grid-cols-3 items-center gap-4">
+                          <label for="<?php echo esc_attr($field['id']); ?>"
+                            class="<?php echo $field['required'] ? 'after:content-[\'*\'] after:ml-0.5 after:text-red-500' : ''; ?>">
+                            <?php echo esc_html($field['label']); ?>
+                          </label>
+                          <section class="flex flex-row gap-4 justify-evenly">
+                            <button id="yes" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn">ja</button>
+                            <button id="no" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn">nein</button>
+                          </section>
+                        </div>
+
                       <?php else: ?>
                         <div class="grid grid-cols-3 items-center gap-4">
                           <label for="<?php echo esc_attr($field['id']); ?>"
@@ -277,7 +290,7 @@ function addEmployeeDialog()
         }
       });
 
-     
+
     });
   </script>
 <?php

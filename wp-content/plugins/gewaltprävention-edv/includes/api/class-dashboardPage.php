@@ -71,7 +71,7 @@ class DashbaordPage_Ajax
     $us_kontrolliert = isset($_POST['us_kontrolliert']) && !empty($_POST['us_kontrolliert']) ? sanitize_text_field($_POST['us_kontrolliert']) : null;
     $sve_eingetragen = isset($_POST['sve_eingetragen']) && !empty($_POST['sve_eingetragen']) ? sanitize_text_field($_POST['sve_eingetragen']) : null;
     $sve_kontrolliert = isset($_POST['sve_kontrolliert']) && !empty($_POST['sve_kontrolliert']) ? sanitize_text_field($_POST['sve_kontrolliert']) : null;
-    $hauptamt = isset($_POST['hauptamt']) && !empty($_POST['hauptamt']) ? sanitize_text_field($_POST['hauptamt']) : null;
+    $hauptamt = isset($_POST['hauptamt']) && ($_POST['hauptamt'] === '0' || $_POST['hauptamt'] === '1') ? sanitize_text_field($_POST['hauptamt']) : 0;
 
     // insert the data
     $table_name = 'employees'; // Add prefix for WordPress compatibility

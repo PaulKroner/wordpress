@@ -10,13 +10,13 @@ Author: Your Name
 add_action('rest_api_init', function () {
   remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
   add_filter('rest_pre_serve_request', function ($value) {
-      header('Access-Control-Allow-Origin: http://localhost:3000'); // Allow your React app's origin
+      header('Access-Control-Allow-Origin: *');
       header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-      header('Access-Control-Allow-Credentials: true'); // Required if sending cookies or auth
-      header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+      header('Access-Control-Allow-Credentials: true');
       return $value;
   });
 }, 15);
+
 
 
 // REST-API-Endpunkt registrieren
@@ -45,50 +45,52 @@ function react_api_get_data() {
 
 
 // Include test.php
-// function include_test()
-// {
-//   $test_path = plugin_dir_path(__FILE__) . 'test.php';
+function include_test()
+{
+  $test_path = plugin_dir_path(__FILE__) . 'test.php';
 
-//   if (file_exists($test_path)) {
-//     include $test_path;
-//   } else {
-//     echo '<p>Test file not found.</p>';
-//   }
-// }
-// add_action('wp_footer', 'include_test');
+  if (file_exists($test_path)) {
+    include $test_path;
+  } else {
+    echo '<p>Test file not found.</p>';
+  }
+}
+add_action('wp_footer', 'include_test');
 
-// add_action('rest_api_init', function () {
-//   register_rest_route('react-api/v1', '/get-users', [
-//       'methods' => 'GET',
-//       'callback' => 'react_api_get_users',
-//       'permission_callback' => '__return_true', // Entferne dies in der Produktion oder füge Berechtigungen hinzu
-//   ]);
-// });
+add_action('rest_api_init', function () {
+  register_rest_route('react-api/v1', '/get-users', [
+      'methods' => 'GET',
+      'callback' => 'react_api_get_users',
+      'permission_callback' => '__return_true', // Entferne dies in der Produktion oder füge Berechtigungen hinzu
+  ]);
+});
 
 // Callback-Funktion für den Endpunkt
-// function react_api_get_users() {
-//   global $wpdb;
+function react_api_get_users() {
+  global $wpdb;
 
-//   // Beispielabfrage: Alle Beiträge aus der WordPress-Datenbank abrufen
-//   $results = $wpdb->get_results("SELECT * FROM users");
+  // Beispielabfrage: Alle Beiträge aus der WordPress-Datenbank abrufen
+  $results = $wpdb->get_results("SELECT * FROM users");
 
-//   if (empty($results)) {
-//       return new WP_Error('no_users', 'No users found', ['status' => 404]);
-//   }
+  if (empty($results)) {
+      return new WP_Error('no_users', 'No users found', ['status' => 404]);
+  }
 
-//   return rest_ensure_response($results);
-// }
+  return rest_ensure_response($results);
+}
+
+// Include the dashboardTableAPI.php file
+require_once plugin_dir_path(__FILE__) . 'api/dashboardTableAPI.php';
 
 // include API files
-// Include test.php
-// function include_api_dashboardTableAPI()
-// {
-//   $dashboardTableAPI_path = plugin_dir_path(__FILE__) . 'api/dashboardTableAPI.php';
+function include_api_dashboardTableAPI()
+{
+  $dashboardTableAPI_path = plugin_dir_path(__FILE__) . 'dashboardTableAPI.php';
 
-//   if (file_exists($dashboardTableAPI_path)) {
-//     include $dashboardTableAPI_path;
-//   } else {
-//     echo '<p>dashboardTableAPI file not found.</p>';
-//   }
-// }
-// add_action('wp_footer', 'include_api_dashboardTableAPI');
+  if (file_exists($dashboardTableAPI_path)) {
+    include $dashboardTableAPI_path;
+  } else {
+    echo '<p>dashboardTableAPI file not found.</p>';
+  }
+}
+add_action('wp_footer', 'include_api_dashboardTableAPI');

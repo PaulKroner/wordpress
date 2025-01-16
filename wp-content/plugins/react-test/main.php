@@ -7,17 +7,20 @@ Version: 1.0
 Author: Your Name
 */
 
-add_action('rest_api_init', function () {
-  remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
-  add_filter('rest_pre_serve_request', function ($value) {
-      header('Access-Control-Allow-Origin: *');
-      header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-      header('Access-Control-Allow-Credentials: true');
-      return $value;
-  });
-}, 15);
+// add_action('rest_api_init', function () {
+//   remove_filter('rest_pre_serve_request', 'rest_send_cors_headers');
+//   add_filter('rest_pre_serve_request', function ($value) {
+//       header('Access-Control-Allow-Origin: *');
+//       header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+//       header('Access-Control-Allow-Credentials: true');
+//       return $value;
+//   });
+// }, 15);
 
 
+// Include the dashboardTableAPI.php file
+require_once plugin_dir_path(__FILE__) . 'routes.php'; // import routes.php
+require_once plugin_dir_path(__FILE__) . 'api/dashboardAPI.php';
 
 // REST-API-Endpunkt registrieren
 add_action('rest_api_init', function () {
@@ -78,9 +81,6 @@ function react_api_get_users() {
 
   return rest_ensure_response($results);
 }
-
-// Include the dashboardTableAPI.php file
-require_once plugin_dir_path(__FILE__) . 'api/dashboardTableAPI.php';
 
 // include API files
 function include_api_dashboardTableAPI()

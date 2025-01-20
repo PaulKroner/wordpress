@@ -31,7 +31,7 @@ function dashboardTable($showNachweise)
       'Selbstverpflichtungserklärung kontrolliert von' => 'sve_kontrolliert',
     ],
   ];
-  ?>
+?>
 
   <div class="overflow-x-auto">
     <table id="dashboard-table" class="w-full table-auto">
@@ -93,18 +93,43 @@ function dashboardTable($showNachweise)
                 // Generate a unique ID for the edit dialog
                 $editDialogId = 'editDialog-' . htmlspecialchars($employee->id);
                 // Include the dialog and pass the necessary variables
+
                 $employeeData = [
                   'id' => $employee->id,
-                  'name' => $employee->name ?? '', // Add more fields as needed
+                  'name' => $employee->name ?? '',
+                  'vorname' => $employee->vorname ?? '',
+                  'email' => $employee->email ?? '',
+                  'postal_data' => [
+                    'street' => $employee->postal_data->street ?? '',
+                    'housenumber' => $employee->postal_data->housenumber ?? '',
+                    'zip' => $employee->postal_data->zip ?? '',
+                    'city' => $employee->postal_data->city ?? '',
+                    'additional' => $employee->postal_data->additional ?? ''
+                  ],
+                  'fz_eingetragen' => $employee->fz_eingetragen ?? '',
+                  'fz_abgelaufen' => $employee->fz_abgelaufen ?? '',
+                  'fz_kontrolliert_first' => $employee->fz_kontrolliert ?? '',
+                  'fz_kontrolliert_second' => $employee->fz_kontrolliert ?? '',
+                  'fz_kontrolliert_am' => $employee->fz_kontrolliert_am ?? '',
+                  'gs_eingetragen' => $employee->gs_eingetragen ?? '',
+                  'gs_erneuert_am' => $employee->gs_erneuert_am ?? '',
+                  'gs_kontrolliert' => $employee->gs_kontrolliert ?? '',
+                  'us_eingetragen' => $employee->us_eingetragen ?? '',
+                  'us_abgelaufen' => $employee->us_abgelaufen ?? '',
+                  'us_kontrolliert' => $employee->us_kontrolliert ?? '',
+                  'sve_eingetragen' => $employee->sve_eingetragen ?? '',
+                  'sve_kontrolliert' => $employee->sve_kontrolliert ?? '',
+                  'hauptamt' => $employee->hauptamt ?? '',
                 ];
+
                 include 'EditEmployeeDialog.php';
                 ?>
-                
+
               </td>
             </tr>
           <?php endforeach; ?>
 
-          <?php
+        <?php
         } else {
           echo '<tr><td colspan="5">No data found</td></tr>';
         }
@@ -113,13 +138,13 @@ function dashboardTable($showNachweise)
     </table>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('search');
       const table = document.getElementById('dashboard-table');
       const deleteEmployeeButton = document.getElementById('deleteEmployeeButton');
 
       // Function to filter the table rows based on the search input
-      searchInput.addEventListener('input', function () {
+      searchInput.addEventListener('input', function() {
         const searchValue = searchInput.value.toLowerCase(); // Get the search value
         const rows = table.querySelectorAll('tbody tr'); // Get all table rows in the tbody
 
@@ -140,6 +165,6 @@ function dashboardTable($showNachweise)
     });
   </script>
 
-  <?php
+<?php
 }
 ?>

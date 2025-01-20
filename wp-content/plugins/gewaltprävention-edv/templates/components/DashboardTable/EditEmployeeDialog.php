@@ -166,25 +166,18 @@ $fields = [
                   <!-- Include postal address fields dynamically -->
                   <div class="grid grid-cols-6 items-center gap-4">
                     <label for="postadresse" class="col-span-2">Postadresse</label>
-
                     <!-- Street Input -->
                     <input type="text" id="street" name="postal_data[street]" value="<?php echo esc_attr(isset($employeeData['postal_data']['street']) ? $employeeData['postal_data']['street'] : ''); ?>" class="col-span-2" placeholder="Straße" />
-
                     <!-- House Number Input -->
                     <input type="text" id="housenumber" name="postal_data[housenumber]" value="<?php echo esc_attr(isset($employeeData['postal_data']['housenumber']) ? $employeeData['postal_data']['housenumber'] : ''); ?>" class="col-span-1" placeholder="Nr." />
-
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
-
                     <!-- ZIP Code Input -->
                     <input type="text" id="zip" name="postal_data[zip]" value="<?php echo esc_attr(isset($employeeData['postal_data']['zip']) ? $employeeData['postal_data']['zip'] : ''); ?>" class="col-span-1" placeholder="PLZ" />
-
                     <!-- City Input -->
                     <input type="text" id="city" name="postal_data[city]" value="<?php echo esc_attr(isset($employeeData['postal_data']['city']) ? $employeeData['postal_data']['city'] : ''); ?>" class="col-span-2" placeholder="Ort" />
-
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
-
                     <!-- Additional Input -->
                     <input type="text" id="additional" name="postal_data[additional]" value="<?php echo esc_attr(isset($employeeData['postal_data']['additional']) ? $employeeData['postal_data']['additional'] : ''); ?>" class="col-span-2" placeholder="Zusatz" />
                   </div>

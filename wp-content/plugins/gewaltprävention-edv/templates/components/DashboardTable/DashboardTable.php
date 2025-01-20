@@ -94,6 +94,15 @@ function dashboardTable($showNachweise)
                 $editDialogId = 'editDialog-' . htmlspecialchars($employee->id);
                 // Include the dialog and pass the necessary variables
 
+                // Assume $fz_kontrolliert contains the string like "Max Mustermann" or "Thomas Müller"
+                $fz_kontrolliert = $employee->fz_kontrolliert ?? '';  // Use the employee's fz_kontrolliert value
+                // Split the name by spaces
+                $kontrolliertNames = preg_split('/\s+/', trim($fz_kontrolliert));
+                // Assign first name and last name based on the length of the name parts
+                $fz_kontrolliert_first = (count($kontrolliertNames) > 0) ? $kontrolliertNames[0] . ' ' . ($kontrolliertNames[1] ?? '') : '';
+                $fz_kontrolliert_second = (count($kontrolliertNames) > 2) ? $kontrolliertNames[2] . ' ' . ($kontrolliertNames[3] ?? '') : '';
+
+
                 $employeeData = [
                   'id' => $employee->id,
                   'name' => $employee->name ?? '',
@@ -108,8 +117,8 @@ function dashboardTable($showNachweise)
                   ],
                   'fz_eingetragen' => $employee->fz_eingetragen ?? '',
                   'fz_abgelaufen' => $employee->fz_abgelaufen ?? '',
-                  'fz_kontrolliert_first' => $employee->fz_kontrolliert ?? '',
-                  'fz_kontrolliert_second' => $employee->fz_kontrolliert ?? '',
+                  'fz_kontrolliert_first' => $fz_kontrolliert_first ?? '',
+                  'fz_kontrolliert_second' => $fz_kontrolliert_second ?? '',
                   'fz_kontrolliert_am' => $employee->fz_kontrolliert_am ?? '',
                   'gs_eingetragen' => $employee->gs_eingetragen ?? '',
                   'gs_erneuert_am' => $employee->gs_erneuert_am ?? '',

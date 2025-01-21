@@ -167,19 +167,19 @@ $fields = [
                   <div class="grid grid-cols-6 items-center gap-4">
                     <label for="postadresse" class="col-span-2">Postadresse</label>
                     <!-- Street Input -->
-                    <input type="text" id="street" name="postal_data[street]" value="<?php echo esc_attr(isset($employeeData['postal_data']['street']) ? $employeeData['postal_data']['street'] : ''); ?>" class="col-span-2" placeholder="Straße" />
+                    <input type="text" id="street-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[street]" value="<?php echo esc_attr(isset($employeeData['postal_data']['street']) ? $employeeData['postal_data']['street'] : ''); ?>" class="col-span-2" placeholder="Straße" />
                     <!-- House Number Input -->
-                    <input type="text" id="housenumber" name="postal_data[housenumber]" value="<?php echo esc_attr(isset($employeeData['postal_data']['housenumber']) ? $employeeData['postal_data']['housenumber'] : ''); ?>" class="col-span-1" placeholder="Nr." />
+                    <input type="text" id="housenumber-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[housenumber]" value="<?php echo esc_attr(isset($employeeData['postal_data']['housenumber']) ? $employeeData['postal_data']['housenumber'] : ''); ?>" class="col-span-1" placeholder="Nr." />
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
                     <!-- ZIP Code Input -->
-                    <input type="text" id="zip" name="postal_data[zip]" value="<?php echo esc_attr(isset($employeeData['postal_data']['zip']) ? $employeeData['postal_data']['zip'] : ''); ?>" class="col-span-1" placeholder="PLZ" />
+                    <input type="text" id="zip-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[zip]" value="<?php echo esc_attr(isset($employeeData['postal_data']['zip']) ? $employeeData['postal_data']['zip'] : ''); ?>" class="col-span-1" placeholder="PLZ" />
                     <!-- City Input -->
-                    <input type="text" id="city" name="postal_data[city]" value="<?php echo esc_attr(isset($employeeData['postal_data']['city']) ? $employeeData['postal_data']['city'] : ''); ?>" class="col-span-2" placeholder="Ort" />
+                    <input type="text" id="city-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[city]" value="<?php echo esc_attr(isset($employeeData['postal_data']['city']) ? $employeeData['postal_data']['city'] : ''); ?>" class="col-span-2" placeholder="Ort" />
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
                     <!-- Additional Input -->
-                    <input type="text" id="additional" name="postal_data[additional]" value="<?php echo esc_attr(isset($employeeData['postal_data']['additional']) ? $employeeData['postal_data']['additional'] : ''); ?>" class="col-span-2" placeholder="Zusatz" />
+                    <input type="text" id="additional-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[additional]" value="<?php echo esc_attr(isset($employeeData['postal_data']['additional']) ? $employeeData['postal_data']['additional'] : ''); ?>" class="col-span-2" placeholder="Zusatz" />
                   </div>
 
                 <?php elseif ($field['id'] === 'hauptamt'): ?>
@@ -196,9 +196,9 @@ $fields = [
                       ?>
 
                       <!-- Yes Button -->
-                      <button id="yes" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn <?php echo $yesActive; ?>">ja</button>
+                      <button id="yes-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 hauptamt-btn <?php echo $yesActive; ?>" data-selected="false">ja</button>
                       <!-- No Button -->
-                      <button id="no" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn <?php echo $noActive; ?>">nein</button>
+                      <button id="no-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 hauptamt-btn <?php echo $noActive; ?>" data-selected="false">nein</button>
                     </section>
                   </div>
 
@@ -314,22 +314,22 @@ $fields = [
     });
 
     function calculateExpiry(inputField, outputField) {
-        inputField.addEventListener('change', function() {
-          const enteredDate = new Date(inputField.value);
-          if (!isNaN(enteredDate)) {
-            // Add 5 years
-            enteredDate.setFullYear(enteredDate.getFullYear() + 5);
+      inputField.addEventListener('change', function() {
+        const enteredDate = new Date(inputField.value);
+        if (!isNaN(enteredDate)) {
+          // Add 5 years
+          enteredDate.setFullYear(enteredDate.getFullYear() + 5);
 
-            // Format the new date as YYYY-MM-DD
-            outputField.value = enteredDate.toISOString().split('T')[0];
-          } else {
-            outputField.value = ''; // Clear the field if invalid date
-          }
-        });
-      }
+          // Format the new date as YYYY-MM-DD
+          outputField.value = enteredDate.toISOString().split('T')[0];
+        } else {
+          outputField.value = ''; // Clear the field if invalid date
+        }
+      });
+    }
 
-      // Apply the function to the fields
-      calculateExpiry(fzEingetragenField, fzAbgelaufenField);
-      calculateExpiry(usEingetragenField, usAbgelaufenField);
+    // Apply the function to the fields
+    calculateExpiry(fzEingetragenField, fzAbgelaufenField);
+    calculateExpiry(usEingetragenField, usAbgelaufenField);
   });
 </script>

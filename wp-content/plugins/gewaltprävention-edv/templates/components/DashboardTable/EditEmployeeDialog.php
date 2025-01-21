@@ -196,9 +196,9 @@ $fields = [
                       ?>
 
                       <!-- Yes Button -->
-                      <button id="yes-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 hauptamt-btn <?php echo $yesActive; ?>" data-selected="false">ja</button>
+                      <button id="yes-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 hover:bg-blue-400 hauptamt-btn <?php echo $yesActive; ?>" data-selected="false">ja</button>
                       <!-- No Button -->
-                      <button id="no-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 hauptamt-btn <?php echo $noActive; ?>" data-selected="false">nein</button>
+                      <button id="no-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 hover:bg-blue-400 hauptamt-btn <?php echo $noActive; ?>" data-selected="false">nein</button>
                     </section>
                   </div>
 

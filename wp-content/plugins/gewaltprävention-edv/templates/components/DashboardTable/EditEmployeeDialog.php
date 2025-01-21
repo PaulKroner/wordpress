@@ -189,8 +189,16 @@ $fields = [
                       <?php echo esc_html($field['label']); ?>
                     </label>
                     <section class="flex flex-row gap-4 justify-evenly">
-                      <button id="yes" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn">ja</button>
-                      <button id="no" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn">nein</button>
+                      <?php
+                      $hauptamt = $employee->hauptamt ?? 0; // Assuming hauptamt is 0 or 1
+                      $yesActive = $hauptamt == 1 ? 'bg-blue-500' : ''; // Yes button active when hauptamt = 1
+                      $noActive = $hauptamt == 0 ? 'bg-blue-500' : ''; // No button active when hauptamt = 0
+                      ?>
+
+                      <!-- Yes Button -->
+                      <button id="yes" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn <?php echo $yesActive; ?>">ja</button>
+                      <!-- No Button -->
+                      <button id="no" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 bg-white hover:bg-blue-400 prevent-default-btn <?php echo $noActive; ?>">nein</button>
                     </section>
                   </div>
 
@@ -202,7 +210,7 @@ $fields = [
                     </label>
                     <input
                       type="<?php echo esc_attr($field['type']); ?>"
-                      id="<?php echo esc_attr($field['id']); ?>"
+                      id="<?php echo esc_attr($field['id'] . '-' . $employeeData['id']); ?>"
                       name="<?php echo esc_attr($field['id']); ?>"
                       value="<?php echo esc_attr(isset($employeeData[$field['id']]) ? $employeeData[$field['id']] : ''); ?>"
                       placeholder="<?php echo isset($field['placeholder']) ? esc_attr($field['placeholder']) : ''; ?>"
@@ -210,12 +218,7 @@ $fields = [
                       <?php echo isset($field['disabled']) && $field['disabled'] ? 'disabled' : ''; ?> />
 
                     <?php if ($field['id'] === 'fz_eingetragen'): ?>
-                      <!-- more information icon -->
                       <div class="text-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                        </svg>
-
                         <span class="flex flex-row items-center">
                           <div>Klicken Sie auf </div>
                           <span class="ml-1"></span>
@@ -226,6 +229,14 @@ $fields = [
                         </span>
                         <div>ein Datum einzugeben</div>
                       </div>
+                    <?php endif; ?>
+
+                    <?php if ($field['id'] === 'fz_kontrolliert_first'): ?>
+                      <span className="col-span-1 leading-none font-medium text-xs text-muted-foreground">
+                        <div className="flex flex-col">
+                          <div>Es müssen zwei Personen kontrolliert haben. Vor- und Nachname erforderlich!</div>
+                        </div>
+                      </span>
                     <?php endif; ?>
                   </div>
                 <?php endif; ?>
@@ -262,23 +273,33 @@ $fields = [
     const dialogOverlay = document.getElementById('dialog-' + dialogId);
     const dialogContent = document.getElementById('dialog-content-' + dialogId);
     const closeDialogButton = document.getElementById('close-dialog-' + dialogId);
-    const cancelDialogButton = document.getElementById('cancel-dialog-' + dialogId);
+    const cancelDialogButton = document.getElementById('cancelButton-' + dialogId);
     const submitButton = document.getElementById('saveChangesButton-' + dialogId);
-    const fzEingetragenField = document.getElementById('fz_eingetragen');
-    const fzAbgelaufenField = document.getElementById('fz_abgelaufen');
-    const usEingetragenField = document.getElementById('us_eingetragen');
-    const usAbgelaufenField = document.getElementById('us_abgelaufen');
+    const fzEingetragenField = document.getElementById('fz_eingetragen-' + dialogId);
+    const fzAbgelaufenField = document.getElementById('fz_abgelaufen-' + dialogId);
+    const usEingetragenField = document.getElementById('us_eingetragen-' + dialogId);
+    const usAbgelaufenField = document.getElementById('us_abgelaufen-' + dialogId);
 
+    // Hide the dialog
+    function hideDialog() {
+      dialogOverlay.classList.add('hidden');
+    }
+
+    if (cancelDialogButton) {
+      cancelDialogButton.addEventListener('click', function() {
+        document.getElementById('dialog-' + dialogId).classList.add('hidden');
+      });
+    } else {
+      console.error("Button not found");
+    }
 
     // Use event delegation to handle buttons and dialogs dynamically
     document.addEventListener('click', function(event) {
       const target = event.target;
-
       // Show the dialog
       if (target.classList.contains('show-dialog')) {
         dialogOverlay?.classList.remove('hidden');
       }
-
       // Hide the dialog
       if (target.classList.contains('hide-dialog')) {
         dialogOverlay?.classList.add('hidden');
@@ -292,12 +313,7 @@ $fields = [
       }
     });
 
-    // Function to calculate and display the expiry date dynamically
-    function calculateExpiry(inputFieldId, outputFieldId) {
-      const inputField = document.getElementById(inputFieldId);
-      const outputField = document.getElementById(outputFieldId);
-
-      if (inputField && outputField) {
+    function calculateExpiry(inputField, outputField) {
         inputField.addEventListener('change', function() {
           const enteredDate = new Date(inputField.value);
           if (!isNaN(enteredDate)) {
@@ -311,17 +327,9 @@ $fields = [
           }
         });
       }
-    }
 
-    // Initialize dynamic expiry calculations for each dialog
-    document.querySelectorAll('[data-dialog-id]').forEach(dialog => {
-      const dialogId = dialog.dataset.dialogId;
-
-      // Apply calculation for fz fields
-      calculateExpiry(`fz_eingetragen-${dialogId}`, `fz_abgelaufen-${dialogId}`);
-
-      // Apply calculation for us fields
-      calculateExpiry(`us_eingetragen-${dialogId}`, `us_abgelaufen-${dialogId}`);
-    });
+      // Apply the function to the fields
+      calculateExpiry(fzEingetragenField, fzAbgelaufenField);
+      calculateExpiry(usEingetragenField, usAbgelaufenField);
   });
 </script>

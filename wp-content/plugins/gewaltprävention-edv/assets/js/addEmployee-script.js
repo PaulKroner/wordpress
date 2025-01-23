@@ -41,6 +41,7 @@ jQuery(document).ready(function ($) {
       var additional = document.getElementById('additional').value.trim();
 
       // Count how many fields are filled
+      // ToDo: return cancelt nicht die gesamte Funktion!!!
       var filledFields = [street, housenumber, zip, city].filter(value => value !== "").length;
       if (filledFields > 0 && filledFields < 4) {
         alert("Error: Either all fields must be filled or all fields must be empty.");

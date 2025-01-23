@@ -49,7 +49,7 @@ function include_dashboard()
     echo '<p>Dashboard file not found.</p>';
   }
 }
-add_action('wp_footer', 'include_dashboard'); // Include dashboard.php in the footer is not recommended - must be main or something
+add_action('wp_footer', 'include_dashboard');
 
 function your_plugin_enqueue_styles()
 {
@@ -103,6 +103,14 @@ add_action('wp_enqueue_scripts', function () {
   wp_enqueue_script(
     'addEmployee-script',
     EDV_PLUGIN_URL . 'assets/js/addEmployee-script.js',
+    ['jquery'],
+    '1.0',
+    true
+  );
+
+  wp_enqueue_script(
+    'editEmployee-script',
+    EDV_PLUGIN_URL . 'assets/js/editEmployee-script.js',
     ['jquery'],
     '1.0',
     true

@@ -51,9 +51,9 @@ jQuery(document).ready(function ($) {
       // combine
       if (filledFields === 4) {
         if (additional) {
-          combinedAddress = street + ' ' + housenumber + ', ' + city + ' ' + zip + ', ' + additional;
+          combinedAddress = street + ' ' + housenumber + ', ' + zip + ' ' + city + ', ' + additional;
         } else {
-          combinedAddress = street + ' ' + housenumber + ', ' + city + ' ' + zip;
+          combinedAddress = street + ' ' + housenumber + ', ' + zip + ' ' + city;
         }
       }
     }

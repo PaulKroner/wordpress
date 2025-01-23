@@ -40,6 +40,7 @@ jQuery(document).ready(function ($) {
       },
     });
 
+    // doppelter Code?
     const data = {
       action: 'delete_employee', // The WordPress AJAX action hook
       employee_id: employeeId, // Pass the employee ID

@@ -3,6 +3,8 @@ jQuery(document).ready(function ($) {
 
   let hauptamtValue = 0;
 
+
+  // hier stimmt doch auch was nicht!!!
   $(document).on('click', '.prevent-default-btn', function (event) {
     event.preventDefault();
 

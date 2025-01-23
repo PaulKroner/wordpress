@@ -69,7 +69,12 @@ function dashboardTable($showNachweise)
               foreach ($nachweise as $key => $columns) {
                 if (!empty($showNachweise[$key])) {
                   foreach ($columns as $field) {
-                    echo '<td>' . htmlspecialchars($employee->$field ?? '') . '</td>';
+                    // Only add data-date for fields with "_abgelaufen"
+                    if (strpos($field, '_abgelaufen') !== false) {
+                      echo '<td data-date="' . htmlspecialchars($employee->$field ?? '') . '">' . htmlspecialchars($employee->$field ?? '') . '</td>';
+                    } else {
+                      echo '<td>' . htmlspecialchars($employee->$field ?? '') . '</td>';
+                    }
                   }
                 }
               }
@@ -147,6 +152,25 @@ function dashboardTable($showNachweise)
     </table>
   </div>
   <script>
+    const getDateStatus = (date) => {
+      const currentDate = new Date();
+      const dateToCheck = new Date(date);
+
+      // Calculate the difference in months
+      const diffTime = dateToCheck - currentDate;
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      const diffMonths = diffDays / 30;
+
+      if (diffMonths <= 0) {
+        return 'bg-red-400'; // Date is in the past or today
+      } else if (diffMonths <= 1) {
+        return 'bg-red-400'; // Date is within 1 month
+      } else if (diffMonths <= 3) {
+        return 'bg-yellow-400'; // Date is within 3 months
+      }
+      return ''; // Date is more than 3 months away
+    };
+
     document.addEventListener('DOMContentLoaded', function() {
       const searchInput = document.getElementById('search');
       const table = document.getElementById('dashboard-table');
@@ -171,9 +195,22 @@ function dashboardTable($showNachweise)
           }
         });
       });
+      // JavaScript function to check the date difference
+
+      const dateCells = document.querySelectorAll('td[data-date]');
+
+      dateCells.forEach((cell) => {
+        const date = cell.getAttribute('data-date');
+        if (date) {
+          const statusClass = getDateStatus(date);
+          if (statusClass) {
+            cell.classList.add(statusClass);
+          }
+        }
+      });
+
     });
   </script>
-
 <?php
 }
 ?>

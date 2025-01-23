@@ -193,12 +193,14 @@ $fields = [
                       $hauptamt = $employee->hauptamt ?? 0; // Assuming hauptamt is 0 or 1
                       $yesActive = $hauptamt == 1 ? 'bg-blue-500' : ''; // Yes button active when hauptamt = 1
                       $noActive = $hauptamt == 0 ? 'bg-blue-500' : ''; // No button active when hauptamt = 0
+                      $yesSelected = $hauptamt == 1 ? 'true' : 'false'; // data-selected is true for Yes button when hauptamt = 1
+                      $noSelected = $hauptamt == 0 ? 'true' : 'false';  // data-selected is true for No button when hauptamt = 0
                       ?>
 
                       <!-- Yes Button -->
-                      <button id="yes-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 hover:bg-blue-400 hauptamt-btn <?php echo $yesActive; ?>" data-selected="false">ja</button>
+                      <button id="yes-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 hover:bg-blue-400 hauptamt-btn <?php echo $yesActive; ?>" data-selected="<?php echo $yesSelected; ?>">ja</button>
                       <!-- No Button -->
-                      <button id="no-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 hover:bg-blue-400 hauptamt-btn <?php echo $noActive; ?>" data-selected="false">nein</button>
+                      <button id="no-<?php echo esc_attr($employeeData['id']) ?>" type="button" class="flex justify-center items-center border rounded-xl w-16 p-2 hover:bg-blue-400 hauptamt-btn <?php echo $noActive; ?>" data-selected="<?php echo $noSelected; ?>">nein</button>
                     </section>
                   </div>
 

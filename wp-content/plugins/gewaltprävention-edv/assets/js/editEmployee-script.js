@@ -19,7 +19,6 @@ jQuery(document).ready(function ($) {
   $(document).on('click', '[id^="saveChangesButton-"]', function (event) {
     event.preventDefault();
 
-
     // Extract the employee ID from the clicked button's ID
     const employeeId = $(this).attr('id').split('-')[1];
     console.log("Employee ID:", employeeId);
@@ -58,6 +57,7 @@ jQuery(document).ready(function ($) {
     // Initialize the combined address when the button is clicked
     updateCombinedAddress();
 
+
     // Check which hauptamt button is selected using the 'data-selected' attribute
     const isYesSelected = $(`#yes-${employeeId}`).attr('data-selected') === 'true';
     const isNoSelected = $(`#no-${employeeId}`).attr('data-selected') === 'true';
@@ -68,9 +68,10 @@ jQuery(document).ready(function ($) {
     } else if (isNoSelected) {
       hauptamt = 0;
     } else {
-      alert("Please select 'ja' or 'nein' before saving.");
+      alert(hauptamt);
       return; // Stop execution if neither button is selected
     }
+
 
     // Prepare the data for the AJAX request
     const data = {
@@ -96,11 +97,7 @@ jQuery(document).ready(function ($) {
       hauptamt: hauptamt,
     };
 
-    console.log('Data:', data);
-    console.log('Data: ' + JSON.stringify(data));  // Log the data for debugging
-
     $.post(dashboardPage_ajax_object.ajax_url, data, function (response) {
-      alert("passiert was")
       if (response.success) {
         alert('Employee updated successfully!');
       } else if (response.error) {

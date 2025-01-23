@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
       // Count how many fields are filled
       const filledFields = [street, housenumber, zip, city].filter(value => value !== "").length;
       if (filledFields > 0 && filledFields < 4) {
-        alert("Error: Either all fields must be filled or all fields must be empty.");
+        alert("Fehler: Entweder müssen alle Felder Straße, Hausnummer, Wohnort und PLZ gefüllt oder alle müssen leer sein.");
         return;
       }
 
@@ -99,11 +99,11 @@ jQuery(document).ready(function ($) {
 
     $.post(dashboardPage_ajax_object.ajax_url, data, function (response) {
       if (response.success) {
-        alert('Employee updated successfully!');
+        alert('Mitarbeiter erfolgreich geändert!');
       } else if (response.error) {
-        alert('JS: Error updating employee');
+        alert('Fehler beim Ändern des Mitarbeiters: ' + response.error);
       } else {
-        alert('An error occurred while trying to update the employee.');
+        alert('Es ist ein unbekannter Fehler aufgetreten.');
       }
     });
 

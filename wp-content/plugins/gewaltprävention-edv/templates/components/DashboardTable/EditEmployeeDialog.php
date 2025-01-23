@@ -332,7 +332,7 @@ $fields = [
         document.getElementById('dialog-' + dialogId).classList.add('hidden');
       });
     } else {
-      console.error("Button not found");
+      console.error("Button nicht gefunden");
     }
 
     // Use event delegation to handle buttons and dialogs dynamically

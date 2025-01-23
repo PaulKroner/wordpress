@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
       // ToDo: return cancelt nicht die gesamte Funktion!!!
       var filledFields = [street, housenumber, zip, city].filter(value => value !== "").length;
       if (filledFields > 0 && filledFields < 4) {
-        alert("Error: Either all fields must be filled or all fields must be empty.");
+        alert("Fehler: Entweder müssen alle Felder Straße, Hausnummer, Wohnort und PLZ gefüllt oder alle müssen leer sein.");
         return;
       }
 
@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
         console.log(response);  // Log the full response for debugging
 
         if (response && response.success) {
-          alert('Employee added successfully!');
+          alert('Mitarbeiter erfolgreich hinzugefügt!');
         } else {
           // alert('Error: ' + (response ? response.message : 'Unknown error'));
         }

@@ -13,7 +13,7 @@ jQuery(document).ready(function ($) {
     }
 
     // Confirmation before deletion
-    if (!confirm('Are you sure you want to delete this employee?')) {
+    if (!confirm('Sind Sie sicher, dass Sie diesen Mitarbeiter löschen möchten?')) {
       return;
     }
 
@@ -27,9 +27,9 @@ jQuery(document).ready(function ($) {
       console.log(response);  // Log the full response for debugging
 
       if (response && response.success) {
-        alert('Employee deleted successfully!');
+        alert('Mitarbeiter erfolgreich gelöscht!');
       } else {
-        alert('Error: ' + (response ? response.message : 'Unknown error'));
+        alert('Fehler: ' + (response ? response.message : 'Unbekannter Fehler'));
       }
     });
   });

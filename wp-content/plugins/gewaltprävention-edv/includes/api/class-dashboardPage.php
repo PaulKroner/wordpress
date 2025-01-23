@@ -80,10 +80,10 @@ class DashbaordPage_Ajax
 
     // Return response
     if ($result) {
-      wp_send_json_success(['message' => 'Employee added successfully!']);
+      wp_send_json_success(['message' => 'Mitarbeiter erfolgreich hinzugefügt!']);
     } else {
       // You can add more detailed information about the error here
-      wp_send_json_error(['message' => 'Failed to insert employee.']);
+      wp_send_json_error(['message' => 'Fehler beim Hinzuügen des Mitarbeiters.']);
     }
     exit;
   }
@@ -93,7 +93,7 @@ class DashbaordPage_Ajax
   {
     // Check for the employee ID
     if (!isset($_POST['employee_id']) || empty($_POST['employee_id'])) {
-      wp_send_json_error('Invalid employee ID.');
+      wp_send_json_error('Ungültige employee ID.');
     }
 
     global $wpdb;
@@ -106,7 +106,7 @@ class DashbaordPage_Ajax
     if ($deleted) {
       wp_send_json_success();
     } else {
-      wp_send_json_error('Failed to delete the employee.');
+      wp_send_json_error('Löschen des Mitarbeiters fehlgeschlagen. SQL Fehler: ' . $wpdb->last_error);
     }
   }
 
@@ -162,9 +162,9 @@ class DashbaordPage_Ajax
   $updated = $wpdb->update($table_name, $data, $where);
 
   if ($updated) {
-    wp_send_json_success('Employee updated successfully');
+    wp_send_json_success('Mitarbeiter erfolgreich geändert!');
   } else {
-    wp_send_json_error('Failed to update employee. SQL Error: ' . $wpdb->last_error);
+    wp_send_json_error('Ändern des Mitarbeiters fehlgeschlagen. SQL Error: ' . $wpdb->last_error);
   }
   }
 }

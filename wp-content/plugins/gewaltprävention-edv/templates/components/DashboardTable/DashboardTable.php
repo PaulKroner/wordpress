@@ -139,7 +139,7 @@ function dashboardTable($showNachweise)
 
         <?php
         } else {
-          echo '<tr><td colspan="5">No data found</td></tr>';
+          echo '<tr><td colspan="5">keine Daten gefunden</td></tr>';
         }
         ?>
       </tbody>

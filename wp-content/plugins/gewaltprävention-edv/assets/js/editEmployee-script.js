@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
       // Combine address fields
       if (filledFields === 4) {
         if (additional) {
-          combinedAddress = `${street}, ${housenumber}, ${city} ${zip}, ${additional}`;
+          combinedAddress = `${street} ${housenumber}, ${city} ${zip}, ${additional}`;
         } else {
           combinedAddress = `${street} ${housenumber}, ${city} ${zip}`;
         }

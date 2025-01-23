@@ -113,13 +113,7 @@ function dashboardTable($showNachweise)
                   'name' => $employee->name ?? '',
                   'vorname' => $employee->vorname ?? '',
                   'email' => $employee->email ?? '',
-                  'postal_data' => [
-                    'street' => $employee->postal_data->street ?? '',
-                    'housenumber' => $employee->postal_data->housenumber ?? '',
-                    'zip' => $employee->postal_data->zip ?? '',
-                    'city' => $employee->postal_data->city ?? '',
-                    'additional' => $employee->postal_data->additional ?? ''
-                  ],
+                  'postal_data' => $employee->postadresse ?? '',
                   'fz_eingetragen' => $employee->fz_eingetragen ?? '',
                   'fz_abgelaufen' => $employee->fz_abgelaufen ?? '',
                   'fz_kontrolliert_first' => $fz_kontrolliert_first ?? '',
@@ -135,7 +129,7 @@ function dashboardTable($showNachweise)
                   'sve_kontrolliert' => $employee->sve_kontrolliert ?? '',
                   'hauptamt' => $employee->hauptamt ?? '',
                 ];
-
+                
                 include 'EditEmployeeDialog.php';
                 ?>
 

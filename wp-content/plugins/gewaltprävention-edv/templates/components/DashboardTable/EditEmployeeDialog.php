@@ -167,19 +167,45 @@ $fields = [
                   <div class="grid grid-cols-6 items-center gap-4">
                     <label for="postadresse" class="col-span-2">Postadresse</label>
                     <!-- Street Input -->
-                    <input type="text" id="street-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[street]" value="<?php echo esc_attr(isset($employeeData['postal_data']['street']) ? $employeeData['postal_data']['street'] : ''); ?>" class="col-span-2" placeholder="Straße" />
+                    <input type="text" id="street-<?php echo esc_attr($employeeData['id']) ?>"
+                      name="postal_data[street]"
+                      value="<?php echo esc_attr(isset($employeeData['postal_data']['street']) ? $employeeData['postal_data'] : ''); ?>"
+                      class="col-span-2"
+                      placeholder="Straße" />
+
                     <!-- House Number Input -->
-                    <input type="text" id="housenumber-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[housenumber]" value="<?php echo esc_attr(isset($employeeData['postal_data']['housenumber']) ? $employeeData['postal_data']['housenumber'] : ''); ?>" class="col-span-1" placeholder="Nr." />
+                    <input type="text" id="housenumber-<?php echo esc_attr($employeeData['id']) ?>"
+                      name="postal_data[housenumber]"
+                      value="<?php echo esc_attr(isset($employeeData['postal_data']['housenumber']) ? $employeeData['postal_data']['housenumber'] : ''); ?>"
+                      class="col-span-1"
+                      placeholder="Nr." />
+
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
+
                     <!-- ZIP Code Input -->
-                    <input type="text" id="zip-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[zip]" value="<?php echo esc_attr(isset($employeeData['postal_data']['zip']) ? $employeeData['postal_data']['zip'] : ''); ?>" class="col-span-1" placeholder="PLZ" />
+                    <input type="text" id="zip-<?php echo esc_attr($employeeData['id']) ?>"
+                      name="postal_data[zip]"
+                      value="<?php echo esc_attr(isset($employeeData['postal_data']['zip']) ? $employeeData['postal_data']['zip'] : ''); ?>"
+                      class="col-span-1"
+                      placeholder="PLZ" />
+
                     <!-- City Input -->
-                    <input type="text" id="city-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[city]" value="<?php echo esc_attr(isset($employeeData['postal_data']['city']) ? $employeeData['postal_data']['city'] : ''); ?>" class="col-span-2" placeholder="Ort" />
+                    <input type="text" id="city-<?php echo esc_attr($employeeData['id']) ?>"
+                      name="postal_data[city]"
+                      value="<?php echo esc_attr(isset($employeeData['postal_data']['city']) ? $employeeData['postal_data']['city'] : ''); ?>"
+                      class="col-span-2"
+                      placeholder="Ort" />
+
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
+
                     <!-- Additional Input -->
-                    <input type="text" id="additional-<?php echo esc_attr($employeeData['id']) ?>" name="postal_data[additional]" value="<?php echo esc_attr(isset($employeeData['postal_data']['additional']) ? $employeeData['postal_data']['additional'] : ''); ?>" class="col-span-2" placeholder="Zusatz" />
+                    <input type="text" id="additional-<?php echo esc_attr($employeeData['id']) ?>"
+                      name="postal_data[additional]"
+                      value="<?php echo esc_attr(isset($employeeData['postal_data']['additional']) ? $employeeData['postal_data']['additional'] : ''); ?>"
+                      class="col-span-2"
+                      placeholder="Zusatz" />
                   </div>
 
                 <?php elseif ($field['id'] === 'hauptamt'): ?>
@@ -271,6 +297,7 @@ $fields = [
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+
     const dialogId = '<?php echo htmlspecialchars($employeeData['id']); ?>';
     const dialogOverlay = document.getElementById('dialog-' + dialogId);
     const dialogContent = document.getElementById('dialog-content-' + dialogId);
@@ -281,6 +308,16 @@ $fields = [
     const fzAbgelaufenField = document.getElementById('fz_abgelaufen-' + dialogId);
     const usEingetragenField = document.getElementById('us_eingetragen-' + dialogId);
     const usAbgelaufenField = document.getElementById('us_abgelaufen-' + dialogId);
+
+    const postadresse = "<?php echo esc_js($employeeData['postal_data'] ?? ''); ?>";
+    const parsedData = parsePostalAddress(postadresse);
+
+    // Populate the fields with parsed data
+    document.getElementById("street-<?php echo esc_attr($employeeData['id']) ?>").value = parsedData.street;
+    document.getElementById("housenumber-<?php echo esc_attr($employeeData['id']) ?>").value = parsedData.housenumber;
+    document.getElementById("zip-<?php echo esc_attr($employeeData['id']) ?>").value = parsedData.zip;
+    document.getElementById("city-<?php echo esc_attr($employeeData['id']) ?>").value = parsedData.city;
+    document.getElementById("additional-<?php echo esc_attr($employeeData['id']) ?>").value = parsedData.additional;
 
     // Hide the dialog
     function hideDialog() {
@@ -334,4 +371,33 @@ $fields = [
     calculateExpiry(fzEingetragenField, fzAbgelaufenField);
     calculateExpiry(usEingetragenField, usAbgelaufenField);
   });
+
+
+  function parsePostalAddress(postadresse) {
+    const postalData = {
+      street: "",
+      housenumber: "",
+      zip: "",
+      city: "",
+      additional: "",
+    };
+
+    if (postadresse !== "keine Postadresse" && postadresse !== "") {
+      const addressParts = postadresse.split(", ");
+
+      if (addressParts.length >= 2) {
+        const streetAndHouse = addressParts[0].split(" ");
+        postalData.street = streetAndHouse.slice(0, -1).join(" ");
+        postalData.housenumber = streetAndHouse[streetAndHouse.length - 1];
+
+        const zipAndCity = addressParts[1].split(" ");
+        postalData.zip = zipAndCity[0];
+        postalData.city = zipAndCity.slice(1).join(" ");
+
+        postalData.additional = addressParts.length > 2 ? addressParts[2] : "";
+      }
+    }
+
+    return postalData;
+  }
 </script>

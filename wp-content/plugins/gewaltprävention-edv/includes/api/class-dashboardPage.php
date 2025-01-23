@@ -4,51 +4,10 @@ class DashbaordPage_Ajax
 {
   public function __construct()
   {
-    // construct every function below
-    // add_action('wp_ajax_insert_user', [$this, 'insert_user']);
-    // add_action('wp_ajax_nopriv_insert_user', [$this, 'insert_user']);
-
     add_action('wp_ajax_insert_employee', [$this, 'insert_employee']);
     add_action('wp_ajax_delete_employee', [$this, 'delete_employee']);
     add_action('wp_ajax_edit_employee', [$this, 'edit_employee']);
   }
-
-  // public function insert_user()
-  // {
-  //   global $wpdb;
-
-  //   // Retrieve and sanitize input data
-  //   $email = sanitize_email($_POST['email']);
-  //   $password = sanitize_text_field($_POST['password']);
-  //   $role_id = intval($_POST['role_id']);
-  //   $name = sanitize_text_field($_POST['name']);
-  //   $vorname = sanitize_text_field($_POST['vorname']);
-
-  //   // Hash the password
-  //   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-  //   // Insert into the custom table
-  //   $table_name = 'users';
-  //   $result = $wpdb->insert(
-  //     $table_name,
-  //     [
-  //       'email' => $email,
-  //       'password' => $hashed_password,
-  //       'role_id' => $role_id,
-  //       'name' => $name,
-  //       'vorname' => $vorname
-  //     ],
-  //     ['%s', '%s', '%d', '%s', '%s'] // Data types
-  //   );
-
-  //   if ($result) {
-  //     wp_send_json_success(['message' => 'User inserted successfully!']);
-  //   } else {
-  //     wp_send_json_error(['message' => 'Failed to insert user.']);
-  //   }
-
-  //   wp_die(); // Required to properly terminate the AJAX request
-  // }
 
   public function insert_employee()
   {
@@ -129,6 +88,7 @@ class DashbaordPage_Ajax
     exit;
   }
 
+
   function delete_employee()
   {
     // Check for the employee ID
@@ -149,6 +109,7 @@ class DashbaordPage_Ajax
       wp_send_json_error('Failed to delete the employee.');
     }
   }
+
 
   function edit_employee()
   {

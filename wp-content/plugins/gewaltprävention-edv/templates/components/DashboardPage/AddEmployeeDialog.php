@@ -51,7 +51,7 @@ function addEmployeeDialog()
     ],
     [
       'id' => 'fz_kontrolliert_second',
-      'label' => 'Führungszeugnis kontrolliert von',
+      'label' => '',
       'type' => 'text',
       'placeholder' => 'Max Mustermann',
       'required' => false,
@@ -294,7 +294,6 @@ function addEmployeeDialog()
       function calculateExpiry(inputField, outputField) {
         inputField.addEventListener('change', function() {
           const enteredDate = new Date(inputField.value);
-          console.log(enteredDate);
           if (!isNaN(enteredDate)) {
             // Add 5 years
             enteredDate.setFullYear(enteredDate.getFullYear() + 5);

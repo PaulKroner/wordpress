@@ -10,6 +10,7 @@ class DashbaordPage_Ajax
 
     add_action('wp_ajax_insert_employee', [$this, 'insert_employee']);
     add_action('wp_ajax_delete_employee', [$this, 'delete_employee']);
+    add_action('wp_ajax_edit_employee', [$this, 'edit_employee']);
   }
 
   // public function insert_user()
@@ -147,6 +148,63 @@ class DashbaordPage_Ajax
     } else {
       wp_send_json_error('Failed to delete the employee.');
     }
+  }
+
+  function edit_employee()
+  {
+    global $wpdb;
+
+    // Retrieve and sanitize input data
+    $employee_id = intval($_POST['employee_id']);
+    $name = sanitize_text_field($_POST['name']);
+    $vorname = sanitize_text_field($_POST['vorname']);
+    $email = sanitize_email($_POST['email']);
+    $postaladress = isset($_POST['postaladress']) && !empty($_POST['postaladress']) ? sanitize_text_field($_POST['postaladress']) : null;
+    $fz_eingetragen = isset($_POST['fz_eingetragen']) && !empty($_POST['fz_eingetragen']) ? sanitize_text_field($_POST['fz_eingetragen']) : null;
+    $fz_abgelaufen = isset($_POST['fz_abgelaufen']) && !empty($_POST['fz_abgelaufen']) ? sanitize_text_field($_POST['fz_abgelaufen']) : null;
+    $fz_kontrolliert_first = isset($_POST['fz_kontrolliert_first']) && !empty($_POST['fz_kontrolliert_first']) ? sanitize_text_field($_POST['fz_kontrolliert_first']) : null;
+    $fz_kontrolliert_second = isset($_POST['fz_kontrolliert_second']) && !empty($_POST['fz_kontrolliert_second']) ? sanitize_text_field($_POST['fz_kontrolliert_second']) : null;
+    $fz_kontrolliert_am = isset($_POST['fz_kontrolliert_am']) && !empty($_POST['fz_kontrolliert_am']) && strtotime($_POST['fz_kontrolliert_am']) ? sanitize_text_field($_POST['fz_kontrolliert_am']) : null;
+    $gs_eingetragen = isset($_POST['gs_eingetragen']) && !empty($_POST['gs_eingetragen']) ? sanitize_text_field($_POST['gs_eingetragen']) : null;
+    $gs_erneuert = isset($_POST['gs_erneuert']) && !empty($_POST['gs_erneuert']) ? sanitize_text_field($_POST['gs_erneuert']) : null;
+    $gs_kontrolliert = isset($_POST['gs_kontrolliert']) && !empty($_POST['gs_kontrolliert']) ? sanitize_text_field($_POST['gs_kontrolliert']) : null;
+    $us_eingetragen = isset($_POST['us_eingetragen']) && !empty($_POST['us_eingetragen']) ? sanitize_text_field($_POST['us_eingetragen']) : null;
+    $us_abgelaufen = isset($_POST['us_abgelaufen']) && !empty($_POST['us_abgelaufen']) ? sanitize_text_field($_POST['us_abgelaufen']) : null;
+    $us_kontrolliert = isset($_POST['us_kontrolliert']) && !empty($_POST['us_kontrolliert']) ? sanitize_text_field($_POST['us_kontrolliert']) : null;
+    $sve_eingetragen = isset($_POST['sve_eingetragen']) && !empty($_POST['sve_eingetragen']) ? sanitize_text_field($_POST['sve_eingetragen']) : null;
+    $sve_kontrolliert = isset($_POST['sve_kontrolliert']) && !empty($_POST['sve_kontrolliert']) ? sanitize_text_field($_POST['sve_kontrolliert']) : null;
+    $hauptamt = isset($_POST['hauptamt']) && ($_POST['hauptamt'] === '0' || $_POST['hauptamt'] === '1') ? sanitize_text_field($_POST['hauptamt']) : 0;
+
+    $table_name = 'employees';
+
+    $data = array(
+      'name' => $name,
+      'vorname' => $vorname,
+      'email' => $email,
+      'postadresse' => $postaladress,
+      'fz_eingetragen' => $fz_eingetragen,
+      'fz_abgelaufen' => $fz_abgelaufen,
+      'fz_kontrolliert' => $fz_kontrolliert_first . ' ' . $fz_kontrolliert_second,
+      'fz_kontrolliert_am' => $fz_kontrolliert_am,
+      'gs_eingetragen' => $gs_eingetragen,
+      'gs_erneuert' => $gs_erneuert,
+      'gs_kontrolliert' => $gs_kontrolliert,
+      'us_eingetragen' => $us_eingetragen,
+      'us_abgelaufen' => $us_abgelaufen,
+      'us_kontrolliert' => $us_kontrolliert,
+      'sve_eingetragen' => $sve_eingetragen,
+      'sve_kontrolliert' => $sve_kontrolliert,
+      'hauptamt' => $hauptamt
+  );
+  $where = array('id' => $employee_id);
+  
+  $updated = $wpdb->update($table_name, $data, $where);
+
+  if ($updated) {
+    wp_send_json_success('Employee updated successfully');
+  } else {
+    wp_send_json_error('Failed to update employee. SQL Error: ' . $wpdb->last_error);
+  }
   }
 }
 

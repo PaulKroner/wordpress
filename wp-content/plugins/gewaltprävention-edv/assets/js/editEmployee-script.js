@@ -74,7 +74,8 @@ jQuery(document).ready(function ($) {
 
     // Prepare the data for the AJAX request
     const data = {
-      action: 'insert_employee',
+      action: 'edit_employee',
+      employee_id: employeeId,
       name: $(`#name-${employeeId}`).val(),
       vorname: $(`#vorname-${employeeId}`).val(),
       email: $(`#email-${employeeId}`).val(),
@@ -96,21 +97,18 @@ jQuery(document).ready(function ($) {
     };
 
     console.log('Data:', data);
+    console.log('Data: ' + JSON.stringify(data));  // Log the data for debugging
 
-    // Send the data using AJAX if required fields are filled
-    // if (data.name && data.vorname && data.email) {
-    //   $.post(dashboardPage_ajax_object.ajax_url, data, function (response) {
-    //     console.log("Response:", response);
-
-    //     if (response && response.success) {
-    //       alert('Employee added successfully!');
-    //     } else {
-    //       alert('Error: ' + (response ? response.message : 'Unknown error'));
-    //     }
-    //   });
-    // } else {
-    //   alert('Please fill in all required fields.');
-    // }
+    $.post(dashboardPage_ajax_object.ajax_url, data, function (response) {
+      alert("passiert was")
+      if (response.success) {
+        alert('Employee updated successfully!');
+      } else if (response.error) {
+        alert('JS: Error updating employee');
+      } else {
+        alert('An error occurred while trying to update the employee.');
+      }
+    });
 
   });
 });

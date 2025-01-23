@@ -171,7 +171,8 @@ $fields = [
                       name="postal_data[street]"
                       value="<?php echo esc_attr(isset($employeeData['postal_data']['street']) ? $employeeData['postal_data'] : ''); ?>"
                       class="col-span-2"
-                      placeholder="Straße" />
+                      placeholder="Straße"
+                      oninput="this.value = this.value.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '')" />
 
                     <!-- House Number Input -->
                     <input type="text" id="housenumber-<?php echo esc_attr($employeeData['id']) ?>"
@@ -188,14 +189,16 @@ $fields = [
                       name="postal_data[zip]"
                       value="<?php echo esc_attr(isset($employeeData['postal_data']['zip']) ? $employeeData['postal_data']['zip'] : ''); ?>"
                       class="col-span-1"
-                      placeholder="PLZ" />
+                      placeholder="PLZ" 
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5)" />
 
                     <!-- City Input -->
                     <input type="text" id="city-<?php echo esc_attr($employeeData['id']) ?>"
                       name="postal_data[city]"
                       value="<?php echo esc_attr(isset($employeeData['postal_data']['city']) ? $employeeData['postal_data']['city'] : ''); ?>"
                       class="col-span-2"
-                      placeholder="Ort" />
+                      placeholder="Ort" 
+                      oninput="this.value = this.value.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '')" />
 
                     <!-- Empty div for spacing -->
                     <div class="col-span-2"></div>
@@ -395,6 +398,19 @@ $fields = [
         postalData.city = zipAndCity.slice(1).join(" ");
 
         postalData.additional = addressParts.length > 2 ? addressParts[2] : "";
+
+        // const streetAndHouse = addressParts[0].split(" ");
+        postalData.street = streetAndHouse.slice(0, -1).join(" ").replace(/[^a-zA-Z\s]/g, ""); // Letters only
+        postalData.housenumber = streetAndHouse[streetAndHouse.length - 1].replace(/[^0-9]/g, ""); // Numbers only
+
+        // Validate zip and city
+        // const zipAndCity = addressParts[1].split(" ");
+        postalData.zip = zipAndCity[0].replace(/[^0-9]/g, "").slice(0, 5); // Numbers only, max length 5
+        postalData.city = zipAndCity.slice(1).join(" ").replace(/[^a-zA-Z\s]/g, ""); // Letters only
+
+        // Validate additional
+        postalData.additional = addressParts.length > 2 ? addressParts[2].replace(/[^a-zA-Z0-9\s]/g, "") : ""; // Letters and numbers only
+
       }
     }
 

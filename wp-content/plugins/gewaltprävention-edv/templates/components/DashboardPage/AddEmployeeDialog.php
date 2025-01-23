@@ -171,19 +171,38 @@ function addEmployeeDialog()
                           <label for="postadresse" class="col-span-2">Postadresse</label>
 
                           <!-- Street Input -->
-                          <input type="text" id="street" name="postal_data[street]" value="<?php echo esc_attr(isset($postal_data['street']) ? $postal_data['street'] : ''); ?>" class="col-span-2" placeholder="Straße" />
+                          <input type="text" id="street"
+                            name="postal_data[street]"
+                            value="<?php echo esc_attr(isset($postal_data['street']) ? $postal_data['street'] : ''); ?>"
+                            class="col-span-2"
+                            placeholder="Straße"
+                            oninput="this.value = this.value.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '')" />
 
                           <!-- House Number Input -->
-                          <input type="text" id="housenumber" name="postal_data[housenumber]" value="<?php echo esc_attr(isset($postal_data['housenumber']) ? $postal_data['housenumber'] : ''); ?>" class="col-span-1" placeholder="Nr." />
+                          <input type="text" id="housenumber"
+                            name="postal_data[housenumber]"
+                            value="<?php echo esc_attr(isset($postal_data['housenumber']) ? $postal_data['housenumber'] : ''); ?>"
+                            class="col-span-1"
+                            placeholder="Nr." />
 
                           <!-- Empty div for spacing -->
                           <div class="col-span-2"></div>
 
                           <!-- ZIP Code Input -->
-                          <input type="text" id="zip" name="postal_data[zip]" value="<?php echo esc_attr(isset($postal_data['zip']) ? $postal_data['zip'] : ''); ?>" class="col-span-1" placeholder="PLZ" />
+                          <input type="text" id="zip"
+                            name="postal_data[zip]"
+                            value="<?php echo esc_attr(isset($postal_data['zip']) ? $postal_data['zip'] : ''); ?>"
+                            class="col-span-1"
+                            placeholder="PLZ"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5)" />
 
                           <!-- City Input -->
-                          <input type="text" id="city" name="postal_data[city]" value="<?php echo esc_attr(isset($postal_data['city']) ? $postal_data['city'] : ''); ?>" class="col-span-2" placeholder="Ort" />
+                          <input type="text" id="city"
+                            name="postal_data[city]"
+                            value="<?php echo esc_attr(isset($postal_data['city']) ? $postal_data['city'] : ''); ?>"
+                            class="col-span-2"
+                            placeholder="Ort"
+                            oninput="this.value = this.value.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '')" />
 
 
                           <!-- Empty div for spacing -->

@@ -51,6 +51,7 @@ function include_dashboard()
 }
 add_action('wp_footer', 'include_dashboard');
 
+
 function your_plugin_enqueue_styles()
 {
   wp_enqueue_style('your-plugin-styles', plugin_dir_url(__FILE__) . 'assets/css/styles.css');

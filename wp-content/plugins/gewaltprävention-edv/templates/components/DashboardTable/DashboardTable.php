@@ -46,7 +46,7 @@ function dashboardTable($showNachweise)
           foreach ($nachweise as $key => $columns) {
             if (!empty($showNachweise[$key])) {
               foreach ($columns as $label => $field) {
-                echo '<th class="border border-slate-300">' . htmlspecialchars($label) . '</th>';
+                echo '<th class="border border-slate-300 ' . htmlspecialchars($key) . '">' . htmlspecialchars($label) . '</th>';
               }
             }
           }
@@ -69,11 +69,12 @@ function dashboardTable($showNachweise)
               foreach ($nachweise as $key => $columns) {
                 if (!empty($showNachweise[$key])) {
                   foreach ($columns as $field) {
-                    // Only add data-date for fields with "_abgelaufen"
+                    // Add a class to each <td> based on the $key
+                    $class = htmlspecialchars($key);
                     if (strpos($field, '_abgelaufen') !== false) {
-                      echo '<td data-date="' . htmlspecialchars($employee->$field ?? '') . '">' . htmlspecialchars($employee->$field ?? '') . '</td>';
+                      echo '<td class="' . $class . '" data-date="' . htmlspecialchars($employee->$field ?? '') . '">' . htmlspecialchars($employee->$field ?? '') . '</td>';
                     } else {
-                      echo '<td>' . htmlspecialchars($employee->$field ?? '') . '</td>';
+                      echo '<td class="' . $class . '">' . htmlspecialchars($employee->$field ?? '') . '</td>';
                     }
                   }
                 }
@@ -129,7 +130,7 @@ function dashboardTable($showNachweise)
                   'sve_kontrolliert' => $employee->sve_kontrolliert ?? '',
                   'hauptamt' => $employee->hauptamt ?? '',
                 ];
-                
+
                 include 'EditEmployeeDialog.php';
                 ?>
 

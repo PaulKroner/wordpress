@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ColumnSelection Component for WordPress
  *
@@ -8,7 +9,8 @@
  * @param callable $handleToggle A function that handles the checkbox toggle event.
  */
 
-function column_selection($showNachweise) {
+function column_selection($showNachweise)
+{
 ?>
   <section class="flex flex-col gap-4 p-4 border-2 rounded-2xl">
     <p class="flex justify-center">
@@ -25,7 +27,7 @@ function column_selection($showNachweise) {
       ];
 
       foreach ($nachweise as $key => $label) {
-        ?>
+      ?>
         <div class="flex flex-row gap-2">
           <label for="<?= $key ?>"><?= $label ?></label>
           <input
@@ -36,15 +38,23 @@ function column_selection($showNachweise) {
             <?php checked($showNachweise[$key], true); ?>
             onclick="handleToggle('<?= $key ?>')" />
         </div>
-        <?php
+      <?php
       }
       ?>
     </div>
   </section>
   <script type="text/javascript">
     function handleToggle(checkboxName) {
-      // showNachweise[checkboxName] = !showNachweise[checkboxName];
-      console.log(checkboxName + " toggled");
+      const columnClass = document.querySelectorAll(`.${checkboxName}`);
+      const checkbox = document.getElementById(checkboxName);
+
+      columnClass.forEach(column => {
+        if (checkbox.checked) {
+          column.classList.remove('hidden');
+        } else {
+          column.classList.add('hidden');
+        }
+      });
     }
   </script>
 <?php

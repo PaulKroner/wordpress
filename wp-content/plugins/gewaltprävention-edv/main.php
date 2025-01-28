@@ -13,6 +13,11 @@ Version: 1.1
 Author URI: https://ecsa.de/
 */
 
+// Sicherheit: Direkten Zugriff verhindern, über relativen Pfad
+// if(!defined('ABSPATH')) {
+//   exit;
+// }
+
 // favicon
 function plugin_add_favicon()
 {

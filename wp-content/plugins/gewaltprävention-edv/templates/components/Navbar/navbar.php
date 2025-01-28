@@ -32,11 +32,11 @@ $loading = false;
     <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
       <?php if (isset($userRole) && $userRole === 1 && isset($isAuthenticated) && $isAuthenticated === true): ?>
         <li>
-          <a href="/registration" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-500 lg:p-0" aria-current="page">Benutzer registrieren</a>
+          <a href="/wordpress/registratio" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-500 lg:p-0" aria-current="page">Benutzer registrieren</a>
         </li>
         <li>
-          <a href="/userAdministration" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-500 lg:p-0">Benutzer verwalten</a>
-      <?php endif; ?>
+        <a href="<?php echo plugin_dir_url(__FILE__) . '../../pages/userAdministration.php'; ?>" class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-500 lg:p-0" aria-current="page">Benutzer verwalten</a>
+        <?php endif; ?>
     </ul>
   </div>
 </div>

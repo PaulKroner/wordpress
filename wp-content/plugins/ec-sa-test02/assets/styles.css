@@ -1,0 +1,27 @@
+.wrap {
+  padding: 20px;
+}
+
+.button-primary {
+  background-color: #0073aa;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.button-primary:hover {
+  background-color: #005177;
+}
+
+.button-secondary {
+  background-color: #444;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.button-secondary:hover {
+  background-color: #222;
+}

@@ -56,6 +56,19 @@ function include_dashboard()
 }
 add_action('wp_footer', 'include_dashboard');
 
+//include login.php
+// function include_login()
+// {
+//   $login_path = plugin_dir_path(__FILE__) . 'templates/pages/login.php';
+
+//   if (file_exists($login_path)) {
+//     include $login_path;
+//   } else {
+//     echo '<p>Login file not found.</p>';
+//   }
+// }
+// add_action('wp_footer', 'include_login');
+
 
 function your_plugin_enqueue_styles()
 {
@@ -94,16 +107,6 @@ require_once EDV_PLUGIN_DIR . 'includes/api/class-dashboardPage.php';
 
 // Enqueue scripts
 add_action('wp_enqueue_scripts', function () {
-  //   wp_enqueue_script(
-  //     'edv-script',
-  //     EDV_PLUGIN_URL . 'assets/edv-script.js',
-  //     ['jquery'],
-  //     '1.0',
-  //     true
-  //   );
-
-  //   // Pass AJAX URL to JavaScript
-  //   wp_localize_script('edv-script', 'edv_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
 
   // enqueue addEmployee Script
   wp_enqueue_script(
@@ -136,3 +139,64 @@ add_action('wp_enqueue_scripts', function () {
   // Pass AJAX URL to JavaScript
   wp_localize_script('deleteEmployee-script', 'dashboardPage_ajax_object', ['ajax_url' => admin_url('admin-ajax.php')]);
 });
+
+function gewaltpraevention_edv_create_pages() {
+  // Dashboard-Seite erstellen, falls nicht vorhanden
+  if (get_page_by_path('dashboard') == null) {
+      wp_insert_post([
+          'post_title'    => 'Dashboard',
+          'post_name'     => 'dashboard',
+          'post_content'  => '[gewaltpraevention_edv_dashboard]', // Ein Shortcode für den Inhalt
+          'post_status'   => 'publish',
+          'post_type'     => 'page'
+      ]);
+  }
+
+  // Login-Seite erstellen, falls nicht vorhanden
+  if (get_page_by_path('userAdministration') == null) {
+      wp_insert_post([
+          'post_title'    => 'User-Verwaltung',
+          'post_name'     => 'user-verwaltung',
+          'post_content'  => '[gewaltpraevention_edv_userAdministration]', // Ein Shortcode für den Inhalt
+          'post_status'   => 'publish',
+          'post_type'     => 'page'
+      ]);
+  }
+}
+register_activation_hook(__FILE__, 'gewaltpraevention_edv_create_pages');
+
+function gewaltpraevention_edv_dashboard_content() {
+  // ob_start();
+  ?>
+  <h1>Dashboard</h1>
+  <p>Willkommen im Dashboard!</p>
+  <form method="post">
+      <button type="submit" name="go_to_userAdministration">Zur User-Administration</button>
+  </form>
+
+  <?php
+  if (isset($_POST['go_to_userAdministration'])) {
+      wp_redirect(site_url('/userAdministration'));
+      exit;
+  }
+  // return ob_get_clean();
+}
+add_shortcode('gewaltpraevention_edv_dashboard', 'gewaltpraevention_edv_dashboard_content');
+
+function gewaltpraevention_edv_userAdministration_content() {
+  // ob_start();
+  ?>
+  <h1>Login</h1>
+  <p>Bitte logge dich ein.</p>
+  <form method="post">
+      <button type="submit" name="go_to_dashboard">Zum Dashboard</button>
+  </form>
+
+  <?php
+  if (isset($_POST['go_to_dashboard'])) {
+      wp_redirect(site_url('/dashboard'));
+      exit;
+  }
+  // return ob_get_clean();
+}
+add_shortcode('gewaltpraevention_edv_userAdministration', 'gewaltpraevention_edv_userAdministration_content');

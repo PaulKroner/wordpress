@@ -21,12 +21,27 @@
         className="absolute top-4 left-4 m-1">
         Back to Dashboard
       </button>
+
+      <section className="flex gap-6 sm:gap-4 flex-col sm:flex-row sm:mr-auto">
+        <!-- SelectRowSort
+ TableSearchbar -->
+      </section>
+
+      <!-- table -->
+      <div class="max-w-full">
+        <?php
+        $userAdministrationTable_path = plugin_dir_path(__FILE__) . '../components/UserAdministrationTable/UserAdministrationTable.php';
+        include $userAdministrationTable_path;
+        userAdministrationTable();
+        ?>
+      </div>
     </div>
   </div>
 
   <script>
     // Ensure the document is fully loaded
     document.addEventListener("DOMContentLoaded", function() {
+      console.log("DOM fully loaded and parsed");
       const backButton = document.getElementById('backToDashboard');
 
       if (backButton) {
@@ -40,7 +55,7 @@
     function backToDashboard() {
       console.log("Test"); // Check if this logs when you click the button
       // Make sure the PHP code renders correctly on the page
-      // const dashboardUrl = '<?php echo plugin_dir_url(__FILE__) . "../../pages/dashboard.php"; ?>';
+      const dashboardUrl = '<?php echo plugin_dir_url(__FILE__) . "../../pages/dashboard.php"; ?>';
       // console.log(dashboardUrl); // Log the URL to see if it's valid
       // window.location.href = dashboardUrl;
     }

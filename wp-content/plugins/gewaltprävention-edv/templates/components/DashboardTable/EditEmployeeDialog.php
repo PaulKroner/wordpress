@@ -159,7 +159,7 @@ $fields = [
               sind Pflichtfelder!
             </div>
 
-            <form id="employee-form" class="grid gap-3 py-4 text-sm">
+            <form id="employee-form-<?php echo esc_attr($employeeData['id']) ?>" class="grid gap-3 py-4 text-sm">
               <?php foreach ($fields as $field): ?>
 
                 <?php if ($field['id'] === 'postaladress'): ?>
